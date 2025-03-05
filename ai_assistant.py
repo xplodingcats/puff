@@ -12,11 +12,9 @@ class PuffAI:
             'alert': 'assets/sprites/alert.png'
         }
         self.current_sprite = Image(source=self.sprites['idle'])
-        self.is_listening = False
 
     def set_api_key(self, key):
         self.api_key = key
-        self.current_sprite.source = self.sprites['idle']
 
     def query(self, message):
         if not self.api_key:
@@ -33,10 +31,9 @@ class PuffAI:
                 data=json.dumps({
                     'model': 'gpt-3.5-turbo',
                     'messages': [
-                        {'role': 'system', 'content': 'You are Puff, a helpful air quality assistant'},
+                        {'role': 'system', 'content': 'You are Puff, an air quality assistant'},
                         {'role': 'user', 'content': message}
-                    ],
-                    'temperature': 0.7
+                    ]
                 })
             )
             Clock.schedule_once(lambda dt: setattr(self.current_sprite, 'source', self.sprites['idle']), 2)
