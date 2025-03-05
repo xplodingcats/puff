@@ -1,14 +1,6 @@
 from kivy.uix.widget import Widget
-from kivy.graphics import Color, Ellipse, Line, Rectangle
-from kivy.properties import NumericProperty, ObjectProperty
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import Screen
-from kivy.clock import Clock
-from kivy.core.window import Window
-from kivy.graphics.texture import Texture
-import matplotlib.pyplot as plt
-import io
+from kivy.graphics import Color, Ellipse, Line
+from kivy.properties import NumericProperty
 import numpy as np
 
 class Gauge(Widget):
@@ -66,43 +58,11 @@ class Gauge(Widget):
             )
             
             # Value label
-            label = Label(
-                text=f"{self.value:.1f} μg/m³",
-                font_size=30,
-                color=(1, 1, 1, 1),
-                pos=(self.center_x - 50, self.center_y - 200)
+            Color(1, 1, 1, 1)
+            self.canvas.add(
+                Label(
+                    text=f"{self.value:.1f} μg/m³",
+                    font_size=30,
+                    pos=(self.center_x - 50, self.center_y - 200)
+                ).canvas
             )
-            label.texture_update()
-            Rectangle(
-                texture=label.texture,
-                pos=label.pos,
-                size=label.texture.size
-            )
-
-class HistoryScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.plot_texture = ObjectProperty(None)
-        self.plot_image = Image()
-        self.add_widget(self.plot_image)
-        
-    def update_plot(self):
-        plt.clf()
-        data = App.get_running_app().db.get_history()
-        timestamps = [d[0] for d in data]
-        pm25 = [d[1] for d in data]
-        pm10 = [d[2] for d in data]
-        
-        plt.figure(figsize=(6, 4))
-        plt.plot(timestamps, pm25, label='PM2.5')
-        plt.plot(timestamps, pm10, label='PM10')
-        plt.xticks(rotation=45)
-        plt.legend()
-        plt.tight_layout()
-        
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        buf.seek(0)
-        texture = Texture.create(size=(600, 400))
-        texture.blit_buffer(buf.getvalue(), colorfmt='rgba', bufferfmt='ubyte')
-        self.plot_image.texture = texture
