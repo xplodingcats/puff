@@ -1,0 +1,31 @@
+#:kivy 2.2.0
+
+<RootScreenManager>:
+    transition: SlideTransition()
+
+<MainScreen>:
+    FloatLayout:
+        Gauge:
+            id: gauge
+            size_hint: 0.8, 0.8
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            
+        Image:
+            id: ai_sprite
+            source: 'assets/sprites/idle.png'
+            size_hint: 0.3, 0.3
+            pos_hint: {'right': 0.95, 'y': 0.05}
+            
+        Button:
+            text: '≡'
+            size_hint: 0.1, 0.1
+            pos_hint: {'x': 0.02, 'top': 0.98}
+            on_press: app.root.toggle_menu()
+
+<Gauge>:
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1
+        Ellipse:
+            pos: self.center_x - 150, self.center_y - 150
+            size: 300, 300
