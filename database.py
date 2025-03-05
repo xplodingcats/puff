@@ -26,9 +26,9 @@ class Database:
             ''', (datetime.now().isoformat(), pm25, pm10))
             self.conn.commit()
         except sqlite3.IntegrityError:
-            pass  # Skip duplicate timestamps
+            pass
 
-    def get_history(self, limit=288):  # 24h data at 5min intervals
+    def get_history(self, limit=288):
         cursor = self.conn.cursor()
         cursor.execute('''
             SELECT * FROM readings 
@@ -36,9 +36,6 @@ class Database:
             LIMIT ?
         ''', (limit,))
         return cursor.fetchall()
-
-    def get_last_24h(self):
-        return self.get_history(288)
 
     def close(self):
         self.conn.close()
