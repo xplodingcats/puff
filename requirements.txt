@@ -1,0 +1,6 @@
+kivy[full]==2.2.0
+matplotlib==3.7.1
+pyserial==3.5
+pandas==2.0.2
+requests==2.31.0
+kivy-garden.graph
