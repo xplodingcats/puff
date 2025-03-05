@@ -18,17 +18,14 @@ class OnboardingScreen(Screen):
         
         # Slide 2: Main Screen
         slide2 = BoxLayout(orientation='vertical')
-        slide2.add_widget(Image(source='assets/gauge_preview.png'))
         slide2.add_widget(Label(text='Main Screen shows real-time readings', font_size=25))
         
         # Slide 3: History
         slide3 = BoxLayout(orientation='vertical')
-        slide3.add_widget(Image(source='assets/history_preview.png'))
         slide3.add_widget(Label(text='View historical data trends', font_size=25))
         
         # Slide 4: Settings
         slide4 = BoxLayout(orientation='vertical')
-        slide4.add_widget(Image(source='assets/settings_preview.png'))
         slide4.add_widget(Label(text='Configure AI and appearance', font_size=25))
         
         carousel.add_widget(slide1)
