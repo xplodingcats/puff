@@ -11,7 +11,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-import requests
 import speech_recognition as sr
 import pyttsx3
 
@@ -113,10 +112,15 @@ class Gauge(QWidget):
         
         # Draw pointer
         angle = (self.value/500)*180 - 90
+        x = 200 + 150 * np.cos(np.radians(angle))
+        y = 200 + 150 * np.sin(np.radians(angle))
+        
         painter.setPen(QPen(Qt.white, 5))
-        painter.drawLine(200, 200, 
-                        200 + 150*np.cos(np.radians(angle)),
-                        200 + 150*np.sin(np.radians(angle)))
+        painter.drawLine(
+            200, 200, 
+            int(x),  # Convert to integer
+            int(y)   # Convert to integer
+        )
         
         # Draw value text
         painter.setFont(QFont('Arial', 30))
